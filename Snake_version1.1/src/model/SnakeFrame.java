@@ -15,25 +15,24 @@ import java.util.concurrent.TimeUnit;
 
 import com.google.common.util.concurrent.ThreadFactoryBuilder;
 
-/*
- * Íê³ÉµÄ¹¦ÄÜ£ºÌí¼ÓÖØ¿ªÒ»¾Ö
- * */
+/**
+ * å®Œæˆçš„åŠŸèƒ½ï¼šæ·»åŠ é‡å¼€ä¸€å±€
+ */
 
 /**
  * @author cq
  */
 public class SnakeFrame extends Frame{
-	//·½¸ñµÄ¿í¶ÈºÍ³¤¶È
+	/**æ–¹æ ¼çš„å®½åº¦å’Œé•¿åº¦*/
 	public static final int BLOCK_WIDTH = 15 ;
 	public static final int BLOCK_HEIGHT = 15 ;
-	//½çÃæµÄ·½¸ñµÄĞĞÊıºÍÁĞÊı
+	/**ç•Œé¢çš„æ–¹æ ¼çš„è¡Œæ•°å’Œåˆ—æ•°*/
 	public static final int ROW = 40;
 	public static final int COL = 40;
 	
-	//µÃ·Ö
+	/**å¾—åˆ†*/
 	private int score = 0;
-	
-	
+
 	public int getScore() {
 		return score;
 	}
@@ -41,24 +40,17 @@ public class SnakeFrame extends Frame{
 	public void setScore(int score) {
 		this.score = score;
 	}
-	//»­Í¼µÄÏß³Ì¶ÔÏó
+
+	/**ç”»å›¾çš„çº¿ç¨‹å¯¹è±¡*/
 	private MyPaintThread paintThread = new MyPaintThread();
-
-
-
+	/**çº¿ç¨‹æ± */
 	ThreadFactory namedThreadFactory = new ThreadFactoryBuilder()
 			.setNameFormat("demo-pool-%d").build();
 	ThreadPoolExecutor  paintThreadPool = new ThreadPoolExecutor(1, 1,
 			0L, TimeUnit.MILLISECONDS,
 			new LinkedBlockingQueue<Runnable>(1024), namedThreadFactory, new ThreadPoolExecutor.AbortPolicy());
 
-
-
-
-
-
-
-
+	/**ç¼“å†²å›¾åƒ*/
 	private Image offScreenImage = null;
 	
 	private Snake snake = new Snake(this);
@@ -70,11 +62,9 @@ public class SnakeFrame extends Frame{
 	public static void main(String[] args) {
 		sf = new SnakeFrame();
 		sf.launch();
-
 	}
 	
 	public void launch(){
-		
 		this.setTitle("Snake");
 		this.setSize(ROW*BLOCK_HEIGHT, COL*BLOCK_WIDTH);
 		this.setLocation(30, 40);
@@ -90,10 +80,8 @@ public class SnakeFrame extends Frame{
 		this.setResizable(false);
 		this.setVisible(true);
 		
-		//Îª½çÃæÌí¼Ó¼àÌıÊÂ¼ş
+		//ä¸ºç•Œé¢æ·»åŠ ç›‘å¬äº‹ä»¶
 		this.addKeyListener(new KeyMonitor());
-
-
 
 		paintThreadPool.execute(paintThread);
 
@@ -106,28 +94,29 @@ public class SnakeFrame extends Frame{
 		bGameOver = true;
 	}
 	
-	/*
-	 * ÖØĞ´update·½·¨
-	 * */
+	/**
+	 * é‡å†™updateæ–¹æ³•
+	 */
 	@Override
 	public void update(Graphics g) {
+	    /**åŒç¼“å†²è§£å†³é—ªçƒ*/
 		if(offScreenImage==null){
 			offScreenImage = this.createImage(ROW*BLOCK_HEIGHT, COL*BLOCK_WIDTH);
 		}
 		Graphics offg = offScreenImage.getGraphics();
-		//ÏÈ½«ÄÚÈİ»­ÔÚĞéÄâ»­²¼ÉÏ
+		//å…ˆå°†å†…å®¹ç”»åœ¨è™šæ‹Ÿç”»å¸ƒä¸Š
 		paint(offg);
-		//È»ºó½«ĞéÄâ»­²¼ÉÏµÄÄÚÈİÒ»Æğ»­ÔÚ»­²¼ÉÏ
+		//ç„¶åå°†è™šæ‹Ÿç”»å¸ƒä¸Šçš„å†…å®¹ä¸€èµ·ç”»åœ¨ç”»å¸ƒä¸Š
 		g.drawImage(offScreenImage, 0, 0, null);
 		
 		if(bGameOver){
-			g.drawString("ÓÎÏ·½áÊø£¡£¡£¡", ROW/2*BLOCK_HEIGHT, COL/2*BLOCK_WIDTH);
+			g.drawString("æ¸¸æˆç»“æŸï¼ï¼ï¼", ROW/2*BLOCK_HEIGHT, COL/2*BLOCK_WIDTH);
 			paintThread.dead();
 		}
 		
 		snake.draw(g);
 		boolean bSuccess=snake.eatEgg(egg);
-		//³ÔÒ»¸ö¼Ó5·Ö
+		//åƒä¸€ä¸ªåŠ 5åˆ†
 		if(bSuccess){
 			score+=5;
 		}
@@ -136,14 +125,14 @@ public class SnakeFrame extends Frame{
 		
 		
 	}
-	/*
-	 * º¯Êı¹¦ÄÜ£ºÔÚ½çÃæÉÏÏÔÊ¾Ò»Ğ©ÌáÊ¾ĞÅÏ¢
-	 * */
+	/**
+	 * å‡½æ•°åŠŸèƒ½ï¼šåœ¨ç•Œé¢ä¸Šæ˜¾ç¤ºä¸€äº›æç¤ºä¿¡æ¯
+	 */
 	public void displaySomeInfor(Graphics g){
 		Color c = g.getColor();
 		g.setColor(Color.RED);
-		g.drawString("Ê¹ÓÃËµÃ÷:¿Õ¸ñ¼ü---ÔİÍ££¬°´¼üB---ÔİÍ£ºó¿ªÊ¼,F2---ÖØĞÂ¿ªÊ¼", 5*BLOCK_HEIGHT, 3*BLOCK_WIDTH);
-		g.drawString("µÃ·Ö:"+score, 5*BLOCK_HEIGHT, 5*BLOCK_WIDTH);		
+		g.drawString("ä½¿ç”¨è¯´æ˜:ç©ºæ ¼é”®---æš‚åœï¼ŒæŒ‰é”®B---æš‚åœåå¼€å§‹,F2---é‡æ–°å¼€å§‹", 5*BLOCK_HEIGHT, 3*BLOCK_WIDTH);
+		g.drawString("å¾—åˆ†:"+score, 5*BLOCK_HEIGHT, 5*BLOCK_WIDTH);		
 		g.setColor(c);
 		
 	}
@@ -152,9 +141,9 @@ public class SnakeFrame extends Frame{
 	public void paint(Graphics g) {
 		Color c = g.getColor();
 		g.setColor(Color.GRAY);
-		/*
-		 * ½«½çÃæ»­³ÉÓÉROW*COLµÄ·½¸ñ¹¹³É,Á½¸öforÑ­»·¼´¿É½â¾ö
-		 * */
+		/**
+		 * å°†ç•Œé¢ç”»æˆç”±ROW*COLçš„æ–¹æ ¼æ„æˆ,ä¸¤ä¸ªforå¾ªç¯å³å¯è§£å†³
+		 */
 		for(int i = 0;i<ROW;i++){
 			g.drawLine(0, i*BLOCK_HEIGHT, COL*BLOCK_WIDTH,i*BLOCK_HEIGHT );
 		}
@@ -166,17 +155,17 @@ public class SnakeFrame extends Frame{
 	}
 	
 	
-	/*
-	 * ÖØ»­Ïß³ÌÀà
-	 * */
+	/**
+	 * é‡ç”»çº¿ç¨‹ç±»
+	 */
 	private class MyPaintThread implements Runnable{
-		//running²»ÄÜ¸Ä±ä£¬¸Ä±äºó´ËÏß³Ì¾Í½áÊøÁË
+		//runningä¸èƒ½æ”¹å˜ï¼Œæ”¹å˜ååˆ™çº¿ç¨‹ç»“æŸ
 		private static final boolean RUNNING = true;
 		private boolean  pause = false;
 		@Override
 		public void run() {
 			while(RUNNING){
-				//Èç¹ûpause Îªtrue £¬ÔòÔİÍ£
+				//å¦‚æœpause ä¸ºtrue ï¼Œåˆ™æš‚åœ
 				if(pause){
 					try {
 						Thread.sleep(100);
@@ -195,29 +184,30 @@ public class SnakeFrame extends Frame{
 			
 		}
 		
-		/*
-		 * º¯Êı¹¦ÄÜ£ºÔİÍ£
-		 * */
+		/**
+		 * å‡½æ•°åŠŸèƒ½ï¼šæš‚åœ
+		 */
 		public void pause(){
 			pause = true;
 		}
-		/*
-		 * ´ÓÔİÍ£ÖĞ»Ö¸´
-		 * */
+
+		/**
+		 * ä»æš‚åœä¸­æ¢å¤
+		 */
 		public void recover(){
 			pause = false;
 		}
-		/*
-		 * ÓÎÏ·½áÊø£¬ËÀÍö,Ö»ÄÜÉèÖÃpause Îªtrue£¬²»ÄÜÉèÖÃrunning = false£¬ÕâÑù¾Íµ¼ÖÂÖØ»­µÄÏß³Ì½áÊøÁË;
-		 * ·ñÔò²»ÄÜÖØĞÂ¿ªÊ¼
-		 * */
+		/**
+		 * æ¸¸æˆç»“æŸï¼Œæ­»äº¡,åªèƒ½è®¾ç½®pause ä¸ºtrueï¼Œä¸èƒ½è®¾ç½®running = falseï¼Œè¿™æ ·å°±å¯¼è‡´é‡ç”»çš„çº¿ç¨‹ç»“æŸäº†;
+		 * å¦åˆ™ä¸èƒ½é‡æ–°å¼€å§‹
+		 */
 		public void dead(){
 			pause = true;
 		}
 		
-		/*
-		 * º¯Êı¹¦ÄÜ£ºÖØĞÂ¿ªÊ¼Ò»¾Ö
-		 * */
+		/**
+		 * å‡½æ•°åŠŸèƒ½ï¼šé‡æ–°å¼€å§‹ä¸€å±€
+		 */
 		public void reStart(){
 			System.out.print("restart2");
 			sf.bGameOver = false;
@@ -227,7 +217,8 @@ public class SnakeFrame extends Frame{
 		}
 		
 	}
-	
+
+	/**é”®ç›˜ç›‘å¬*/
 	private class KeyMonitor extends KeyAdapter{
 		
 		@Override
@@ -237,11 +228,11 @@ public class SnakeFrame extends Frame{
 				
 				paintThread.pause();
 			}
-			else if(key == KeyEvent.VK_B){//¿ªÊ¼
+			else if(key == KeyEvent.VK_B){//å¼€å§‹
 				
 				paintThread.recover();
 			}
-			else if(key == KeyEvent.VK_F2){//ÔÙ¿ªÒ»¾Ö
+			else if(key == KeyEvent.VK_F2){//å†å¼€ä¸€å±€
 
 				paintThread.reStart();
 			}
