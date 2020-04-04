@@ -9,19 +9,23 @@ import java.awt.event.KeyEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
-/*
- * Íê³ÉµÄ¹¦ÄÜ£ºÌí¼ÓµÃ·Ö¼ÇÂ¼
- * */
+/**
+ * å®Œæˆçš„åŠŸèƒ½ï¼šæ·»åŠ å¾—åˆ†è®°å½•
+ */
+
+/**
+ * @author cq
+ */
 
 public class SnakeFrame extends Frame{
-	//·½¸ñµÄ¿í¶ÈºÍ³¤¶È
+	/**æ–¹æ ¼çš„å®½åº¦å’Œé•¿åº¦*/
 	public static final int BLOCK_WIDTH = 15 ;
 	public static final int BLOCK_HEIGHT = 15 ;
-	//½çÃæµÄ·½¸ñµÄĞĞÊıºÍÁĞÊı
+	/**ç•Œé¢çš„æ–¹æ ¼çš„è¡Œæ•°å’Œåˆ—æ•°*/
 	public static final int ROW = 40;
 	public static final int COL = 40;
 	
-	//µÃ·Ö
+	/**å¾—åˆ†*/
 	private int score = 0;
 	
 	
@@ -33,7 +37,7 @@ public class SnakeFrame extends Frame{
 		this.score = score;
 	}
 
-
+	/**ç¼“å†²å›¾åƒ*/
 	private Image offScreenImage = null;
 	
 	private Snake snake = new Snake(this);
@@ -61,45 +65,46 @@ public class SnakeFrame extends Frame{
 		this.setResizable(false);
 		this.setVisible(true);
 		
-		//Îª½çÃæÌí¼Ó¼àÌıÊÂ¼ş
+		//ä¸ºç•Œé¢æ·»åŠ ç›‘å¬äº‹ä»¶
 		this.addKeyListener(new KeyMonitor());
 		
 		new Thread(new MyPaintThread()).start();
 	}
 	
 	
-	private boolean b_gameOver = false;
+	private boolean bGameOver = false;
 	
 	public void gameOver(){
-		b_gameOver = true;
+		bGameOver = true;
 	}
 	
-	/*
-	 * ÖØĞ´update·½·¨
-	 * */
+	/**
+	 * é‡å†™updateæ–¹æ³•
+	 */
 	@Override
 	public void update(Graphics g) {
+		/**åŒç¼“å†²è§£å†³é—ªçƒ*/
 		if(offScreenImage==null){
 			offScreenImage = this.createImage(ROW*BLOCK_HEIGHT, COL*BLOCK_WIDTH);
 		}
 		Graphics offg = offScreenImage.getGraphics();
-		//ÏÈ½«ÄÚÈİ»­ÔÚĞéÄâ»­²¼ÉÏ
+		//å…ˆå°†å†…å®¹ç”»åœ¨è™šæ‹Ÿç”»å¸ƒä¸Š
 		paint(offg);
-		//È»ºó½«ĞéÄâ»­²¼ÉÏµÄÄÚÈİÒ»Æğ»­ÔÚ»­²¼ÉÏ
+		//ç„¶åå°†è™šæ‹Ÿç”»å¸ƒä¸Šçš„å†…å®¹ä¸€èµ·ç”»åœ¨ç”»å¸ƒä¸Š
 		g.drawImage(offScreenImage, 0, 0, null);
 		
-		if(b_gameOver){
-			g.drawString("ÓÎÏ·½áÊø£¡£¡£¡", ROW/2*BLOCK_HEIGHT, COL/2*BLOCK_WIDTH);
+		if(bGameOver){
+			g.drawString("æ¸¸æˆç»“æŸï¼ï¼ï¼", ROW/2*BLOCK_HEIGHT, COL/2*BLOCK_WIDTH);
 		}
 		
 		snake.draw(g);
-		boolean b_Success=snake.eatEgg(egg);
-		//³ÔÒ»¸ö¼Ó5·Ö
-		if(b_Success){
+		boolean bSuccess=snake.eatEgg(egg);
+		//åƒä¸€ä¸ªåŠ 5åˆ†
+		if(bSuccess){
 			score+=5;
 		}
 		egg.draw(g);
-		g.drawString("µÃ·Ö:"+score, 5*BLOCK_HEIGHT, 5*BLOCK_WIDTH);
+		g.drawString("å¾—åˆ†:"+score, 5*BLOCK_HEIGHT, 5*BLOCK_WIDTH);
 		
 	}
 
@@ -108,7 +113,7 @@ public class SnakeFrame extends Frame{
 		Color c = g.getColor();
 		g.setColor(Color.GRAY);
 		/*
-		 * ½«½çÃæ»­³ÉÓÉROW*COLµÄ·½¸ñ¹¹³É,Á½¸öforÑ­»·¼´¿É½â¾ö
+		 * å°†ç•Œé¢ç”»æˆç”±ROW*COLçš„æ–¹æ ¼æ„æˆ,ä¸¤ä¸ªforå¾ªç¯å³å¯è§£å†³
 		 * */
 		for(int i = 0;i<ROW;i++){
 			g.drawLine(0, i*BLOCK_HEIGHT, COL*BLOCK_WIDTH,i*BLOCK_HEIGHT );
@@ -122,9 +127,9 @@ public class SnakeFrame extends Frame{
 	
 
 	
-	/*
-	 * ÖØ»­Ïß³ÌÀà
-	 * */
+	/**
+	 * é‡ç”»çº¿ç¨‹ç±»
+	 */
 	private class MyPaintThread implements Runnable{
 		private boolean running = true;
 		@Override
@@ -141,7 +146,8 @@ public class SnakeFrame extends Frame{
 		}
 		
 	}
-	
+
+	/**é”®ç›˜ç›‘å¬*/
 	private class KeyMonitor extends KeyAdapter{
 
 		@Override
