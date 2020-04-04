@@ -1,5 +1,24 @@
 package model;
 
+/**
+ * @author yhyf
+ */
+
 public enum Direction {
-	L,U,R,D
+	/**
+	 * Left
+	 */
+	L,
+	/**
+	 * Up
+	 */
+	U,
+	/**
+	 * Right
+	 */
+	R,
+	/**
+	 * Down
+	 */
+	D
 }
