@@ -5,9 +5,14 @@ import java.awt.Graphics;
 import java.awt.Rectangle;
 import java.awt.event.KeyEvent;
 
+/**
+ * @author yhyf
+ */
 public class Snake {
 	private static final int BLOCK_WIDTH = SnakeFrame.BLOCK_WIDTH;
 	private static final int BLOCK_HEIGHT = SnakeFrame.BLOCK_HEIGHT;
+	private static final int ROW_LIMIT = 2;
+	private static final int COL_LIMIT = 0;
 	
 	private Node head = null;
 	private Node tail = null;	
@@ -33,23 +38,23 @@ public class Snake {
 			node.draw(g);
 		}	
 	}
-	/*
-	 * ´Ëº¯ÊıµÄ¹¦ÄÜ£¬ÏÈÔÚÍ·²¿Ìí¼ÓÒ»¸ö½Úµã£¬È»ºóÉ¾³ıÎ²²¿µÄ½Úµã£¬ÕâÑù¾ÍÍê³ÉÁËÒÆ¶¯
-	 * */
+	/**
+	 * åœ¨å¤´éƒ¨æ·»åŠ ä¸€ä¸ªèŠ‚ç‚¹ï¼Œç„¶ååˆ é™¤å°¾éƒ¨çš„èŠ‚ç‚¹ï¼Œå®Œæˆç§»åŠ¨
+	 */
 	public void move() {
 		addNodeInHead();
-		//¼ì²éÊÇ·ñËÀÃ¦
+		//æ£€æŸ¥æ˜¯å¦æ­»äº¡
 		checkDead();
 		deleteNodeInTail();
 	}
 
 	private void checkDead() {
-		//Í·½áµãµÄ±ß½ç¼ì²é
-		if(head.row<2||head.row>SnakeFrame.ROW||head.col<0||head.col>SnakeFrame.COL){
+		//å¤´ç»“ç‚¹çš„è¾¹ç•Œæ£€æŸ¥
+		if(head.row<ROW_LIMIT||head.row>SnakeFrame.ROW||head.col<COL_LIMIT||head.col>SnakeFrame.COL){
 			this.sf.gameOver();
 		}
 		
-		//Í·½áµãÓëÆäËü½áµãÏà×²Ò²ÊÇËÀÃ¦
+		//å¤´ç»“ç‚¹ä¸å…¶å®ƒç»“ç‚¹ç›¸æ’
 		for(Node node =head.next;node!=null;node = node.next){
 			if(head.row==node.row&&head.col == node.col){
 				this.sf.gameOver();
@@ -79,6 +84,8 @@ public class Snake {
 		case D:
 			node = new Node(head.row+1,head.col,head.dir);
 			break;
+			default:
+				;
 		}
 		
 		node.next = head;
@@ -110,15 +117,18 @@ public class Snake {
 				head.dir = Direction.D;
 			}
 			break;
+			default:
+				;
 		}
 	}
-	
+
+	/**ç”¨äºç¢°æ’æ£€æµ‹*/
 	public Rectangle getRect(){
 		return new Rectangle(head.col*BLOCK_WIDTH, head.row*BLOCK_HEIGHT, BLOCK_WIDTH, BLOCK_HEIGHT);
 	}
 	
 	public boolean eatEgg(Egg egg){
-		
+		/**ç¢°æ’æ£€æµ‹*/
 		if(this.getRect().intersects(egg.getRect())){
 			addNodeInHead();
 			egg.reAppear();
@@ -132,12 +142,12 @@ public class Snake {
 	public class Node {
 		
 
-		/*
-		 * Ã¿¸ö½ÚµãµÄÎ»ÖÃ
-		 * */
+		/**
+		 * æ¯ä¸ªèŠ‚ç‚¹çš„ä½ç½®
+		 */
 		private int row;
 		private int col;
-		//·½Ïò
+		/**æ–¹å‘*/
 		private Direction dir ;
 		
 		private Node pre;
