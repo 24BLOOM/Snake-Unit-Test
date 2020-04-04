@@ -38,24 +38,23 @@ public class Snake {
 			node.draw(g);
 		}	
 	}
-	/*
-	 * ´Ëº¯ÊıµÄ¹¦ÄÜ£¬ÏÈÔÚÍ·²¿Ìí¼ÓÒ»¸ö½Úµã£¬È»ºóÉ¾³ıÎ²²¿µÄ½Úµã£¬ÕâÑù¾ÍÍê³ÉÁËÒÆ¶¯
-	 * */
+	/**
+	 * å…ˆåœ¨å¤´éƒ¨æ·»åŠ ä¸€ä¸ªèŠ‚ç‚¹ï¼Œç„¶ååˆ é™¤å°¾éƒ¨çš„èŠ‚ç‚¹ï¼Œå®Œæˆç§»åŠ¨
+	 */
 	public void move() {
 		addNodeInHead();
-		//¼ì²éÊÇ·ñËÀÃ¦
+		//æ£€æŸ¥æ˜¯å¦æ­»äº¡
 		checkDead();
 		deleteNodeInTail();
 	}
 
 	private void checkDead() {
-		//Í·½áµãµÄ±ß½ç¼ì²é
-
+		//å¤´ç»“ç‚¹çš„è¾¹ç•Œæ£€æŸ¥
 		if((head.row < ROW_LIMIT) || (head.row > SnakeFrame.ROW) || (head.col < COL_LIMIT) || (head.col > SnakeFrame.COL)){
 			this.sf.gameOver();
 		}
 
-		//Í·½áµãÓëÆäËü½áµãÏà×²Ò²ÊÇËÀÃ¦
+		//å¤´ç»“ç‚¹ä¸å…¶å®ƒç»“ç‚¹ç›¸æ’
 		for(Node node =head.next;node!=null;node = node.next){
 			if(head.row==node.row&&head.col == node.col){
 				this.sf.gameOver();
@@ -123,13 +122,14 @@ public class Snake {
 				;
 		}
 	}
-	
+
+	/**ç”¨äºç¢°æ’æ£€æµ‹*/
 	public Rectangle getRect(){
 		return new Rectangle(head.col*BLOCK_WIDTH, head.row*BLOCK_HEIGHT, BLOCK_WIDTH, BLOCK_HEIGHT);
 	}
 	
 	public boolean eatEgg(Egg egg){
-		
+		/**ç¢°æ’æ£€æµ‹*/
 		if(this.getRect().intersects(egg.getRect())){
 			addNodeInHead();
 			egg.reAppear();
@@ -143,12 +143,12 @@ public class Snake {
 	public class Node {
 
 
-		/*
-		 * Ã¿¸ö½ÚµãµÄÎ»ÖÃ
-		 * */
+		/**
+		 * æ¯ä¸ªèŠ‚ç‚¹çš„ä½ç½®
+		 */
 		private int row;
 		private int col;
-		//·½Ïò
+		/**æ–¹å‘*/
 		private Direction dir ;
 		
 		private Node pre;
