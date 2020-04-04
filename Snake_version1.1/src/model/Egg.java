@@ -9,10 +9,10 @@ import java.util.Random;
  * @author yhyf
  */
 public class Egg {
-	/* ËùÔÚµÄÎ»ÖÃ */
+	/** æ‰€åœ¨çš„ä½ç½® */
 	private int row;
 	private int col;
-	/* ´óĞ¡ */
+	/** å¤§å° */
 	private static final int BLOCK_WIDTH = SnakeFrame.BLOCK_WIDTH;
 	private static final int BLOCK_HEIGHT = SnakeFrame.BLOCK_HEIGHT;
 	
@@ -28,7 +28,8 @@ public class Egg {
 	public Egg() {
 		this((R.nextInt(SnakeFrame.ROW-2))+2,(R.nextInt(SnakeFrame.COL-2))+2);
 	}
-	
+
+	/**éšæœºäº§ç”Ÿegg*/
 	public void reAppear(){
 		this.row = (R.nextInt(SnakeFrame.ROW-2))+2;
 		this.col = (R.nextInt(SnakeFrame.COL-2))+2;
@@ -39,7 +40,7 @@ public class Egg {
 		g.setColor(color);
 		g.fillOval(col*BLOCK_WIDTH, row*BLOCK_HEIGHT, BLOCK_WIDTH, BLOCK_HEIGHT);
 		g.setColor(c);
-		//¸Ä±äÏÂÒ»´ÎµÄÑÕÉ«
+		/**æ”¹å˜ä¸‹ä¸€æ¬¡çš„é¢œè‰²*/
 		if(color==Color.RED){
 			color = Color.BLUE;
 		}
@@ -48,7 +49,7 @@ public class Egg {
 		}
 		
 	}
-	/* ÓÃÓÚÅö×²¼ì²â */
+	/**ç”¨äºç¢°æ’æ£€æµ‹ */
 	public Rectangle getRect(){
 		return new Rectangle(col*BLOCK_WIDTH, row*BLOCK_HEIGHT, BLOCK_WIDTH, BLOCK_HEIGHT);
 	}
