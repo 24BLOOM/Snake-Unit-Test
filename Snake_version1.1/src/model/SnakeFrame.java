@@ -41,8 +41,9 @@ public class SnakeFrame extends Frame{
 		this.score = score;
 	}
 
-	/**画图的线程对象*/
+	//画图的线程对象
 	private MyPaintThread paintThread = new MyPaintThread();
+
 	/**线程池*/
 	ThreadFactory namedThreadFactory = new ThreadFactoryBuilder()
 			.setNameFormat("demo-pool-%d").build();
@@ -63,8 +64,18 @@ public class SnakeFrame extends Frame{
 		sf = new SnakeFrame();
 		sf.launch();
 	}
-	
+
+	/**
+	 * @title: launch
+	 * @description: 启动游戏
+	 * @param: []
+	 * @return: void
+	 * @date: 2020/4/3
+	 * @throws
+	 */
+
 	public void launch(){
+
 		this.setTitle("Snake");
 		this.setSize(ROW*BLOCK_HEIGHT, COL*BLOCK_WIDTH);
 		this.setLocation(30, 40);
@@ -93,12 +104,23 @@ public class SnakeFrame extends Frame{
 	public void gameOver(){
 		bGameOver = true;
 	}
-	
-	/**
-	 * 重写update方法
-	 */
+
+
+
+	 /**
+	  * @title: update
+	  * @description: 重写updata方法 更新画布
+	  * @param: [g]
+	  * @return: void
+	  * @date: 2020/4/3
+	  * @throws
+	  */
+
 	@Override
 	public void update(Graphics g) {
+
+
+
 	    /**双缓冲解决闪烁*/
 		if(offScreenImage==null){
 			offScreenImage = this.createImage(ROW*BLOCK_HEIGHT, COL*BLOCK_WIDTH);
@@ -125,10 +147,18 @@ public class SnakeFrame extends Frame{
 		
 		
 	}
-	/**
-	 * 函数功能：在界面上显示一些提示信息
-	 */
+
+	 /**
+	  * @title: displaySomeInfor
+	  * @description: 在界面上显示一些提示信息
+	  * @param: [g]
+	  * @return: void
+	  * @date: 2020/4/3 21:44
+	  * @throws
+	  */
+
 	public void displaySomeInfor(Graphics g){
+
 		Color c = g.getColor();
 		g.setColor(Color.RED);
 		g.drawString("使用说明:空格键---暂停，按键B---暂停后开始,F2---重新开始", 5*BLOCK_HEIGHT, 3*BLOCK_WIDTH);
@@ -137,13 +167,23 @@ public class SnakeFrame extends Frame{
 		
 	}
 
+
+	 /**
+	  * @title: paint
+	  * @description: 画图
+	  * @param: [g]
+	  * @return: void
+	  * @date: 2020/4/5
+	  * @throws
+	  */
+
 	@Override
 	public void paint(Graphics g) {
+
 		Color c = g.getColor();
 		g.setColor(Color.GRAY);
-		/**
-		 * 将界面画成由ROW*COL的方格构成,两个for循环即可解决
-		 */
+
+		/* 将界面画成由ROW*COL的方格构成,两个for循环即可解决*/
 		for(int i = 0;i<ROW;i++){
 			g.drawLine(0, i*BLOCK_HEIGHT, COL*BLOCK_WIDTH,i*BLOCK_HEIGHT );
 		}
@@ -155,17 +195,22 @@ public class SnakeFrame extends Frame{
 	}
 	
 	
-	/**
-	 * 重画线程类
-	 */
+
+	 /**
+	  * @title: MyPaintThread
+	  * @author: chenqi
+	  * @description: 画图线程类
+	  * @date: 2020/4/3
+	  */
 	private class MyPaintThread implements Runnable{
+
 		//running不能改变，改变后则线程结束
 		private static final boolean RUNNING = true;
 		private boolean  pause = false;
 		@Override
 		public void run() {
 			while(RUNNING){
-				//如果pause 为true ，则暂停
+				/*如果pause 为true ，则暂停*/
 				if(pause){
 					try {
 						Thread.sleep(100);
@@ -174,6 +219,7 @@ public class SnakeFrame extends Frame{
 					}
 					continue;
 				}
+
 				repaint();
 				try {
 					Thread.sleep(100);
@@ -183,32 +229,58 @@ public class SnakeFrame extends Frame{
 			}
 			
 		}
-		
-		/**
-		 * 函数功能：暂停
-		 */
+
+		 /**
+		  * @title: pause
+		  * @description: 暂停游戏
+		  * @param: []
+		  * @return: void
+		  * @date: 2020/4/3
+		  * @throws
+		  */
 		public void pause(){
+
 			pause = true;
 		}
 
-		/**
-		 * 从暂停中恢复
-		 */
+		 /**
+		  * @title: recover
+		  * @description: 从暂停中恢复
+		  * @param: []
+		  * @return: void
+		  * @date: 2020/4/5
+		  * @throws
+		  */
+
 		public void recover(){
+
 			pause = false;
 		}
-		/**
-		 * 游戏结束，死亡,只能设置pause 为true，不能设置running = false，这样就导致重画的线程结束了;
-		 * 否则不能重新开始
-		 */
+
+		 /**
+		  * @title: dead
+		  * @description: 游戏结束，死亡,只能设置pause 为true，不能设置running = false，这样就导致重画的线程结束了，否则不能重新开始
+		  * @param: []
+		  * @return: void
+		  * @date: 2020/4/5
+		  * @throws
+		  */
+
 		public void dead(){
+
 			pause = true;
 		}
-		
-		/**
-		 * 函数功能：重新开始一局
-		 */
+
+		 /**
+		  * @title: reStart
+		  * @description: 重新开始
+		  * @param: []
+		  * @return: void
+		  * @date: 2020/4/3
+		  * @throws
+		  */
 		public void reStart(){
+
 			sf.bGameOver = false;
 			this.pause = false;
 			snake = new Snake(sf);
@@ -217,13 +289,20 @@ public class SnakeFrame extends Frame{
 		
 	}
 
-	/**键盘监听*/
+
+	 /**
+	  * @title: KeyMonitor
+	  * @author: chenqi
+	  * @description: 键盘监听
+	  * @date: 2020/4/3
+	  */
 	private class KeyMonitor extends KeyAdapter{
 		
 		@Override
 		public void keyPressed(KeyEvent e) {
 			int key = e.getKeyCode();
-			if(key == KeyEvent.VK_SPACE){
+
+			if(key == KeyEvent.VK_SPACE){//暂停
 				
 				paintThread.pause();
 			}

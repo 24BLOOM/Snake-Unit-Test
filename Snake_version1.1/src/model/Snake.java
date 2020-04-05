@@ -12,6 +12,7 @@ import java.awt.event.KeyEvent;
   * @date: 2020/4/3
   */
 public class Snake {
+
 	private static final int BLOCK_WIDTH = SnakeFrame.BLOCK_WIDTH;
 	private static final int BLOCK_HEIGHT = SnakeFrame.BLOCK_HEIGHT;
 	private static final int ROW_LIMIT = 2;
@@ -146,6 +147,12 @@ public class Snake {
 		}
 	}
 
+	 /**
+	  * @title: Node
+	  * @author: yhyf
+	  * @description: 蛇节点类
+	  * @date: 2020/4/3
+	  */
 	public class Node {
 
 

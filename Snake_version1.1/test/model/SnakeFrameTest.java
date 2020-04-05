@@ -7,7 +7,7 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 
 /**
- * @version V1.0
+ * @version V1.1
  * @Title:
  * @Package
  * @Description:
