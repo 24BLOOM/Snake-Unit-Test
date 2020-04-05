@@ -9,14 +9,14 @@ import java.awt.event.KeyEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
-/**
- * 完成的功能：添加得分记录
- */
 
-/**
- * @author cq
- */
 
+ /**
+  * @title: SnakeFrame
+  * @author: chenqi
+  * @description: 游戏界面类
+  * @date: 2020/3/31
+  */
 public class SnakeFrame extends Frame{
 	/**方格的宽度和长度*/
 	public static final int BLOCK_WIDTH = 15 ;

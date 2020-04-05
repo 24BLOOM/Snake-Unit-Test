@@ -15,13 +15,13 @@ import java.util.concurrent.TimeUnit;
 
 import com.google.common.util.concurrent.ThreadFactoryBuilder;
 
-/**
- * 完成的功能：添加重开一局
- */
 
-/**
- * @author cq
- */
+ /**
+  * @title: SnakeFrame
+  * @author: chenqi
+  * @description: 游戏界面类
+  * @date: 2020/4/3
+  */
 public class SnakeFrame extends Frame{
 	/**方格的宽度和长度*/
 	public static final int BLOCK_WIDTH = 15 ;

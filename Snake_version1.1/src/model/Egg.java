@@ -6,7 +6,9 @@ import java.awt.Rectangle;
 import java.util.Random;
 
 /**
+ *@ description 食物类
  * @author yhyf
+ * @date 2020/4/3
  */
 public class Egg {
 	/** 所在的位置 */

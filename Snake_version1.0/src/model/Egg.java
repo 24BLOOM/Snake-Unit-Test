@@ -5,9 +5,12 @@ import java.awt.Graphics;
 import java.awt.Rectangle;
 import java.util.Random;
 
-/**
- * @author yhyf
- */
+ /**
+  * @title: Egg
+  * @author: yhyf
+  * @description: 食物类
+  * @date: 2020/3/30
+  */
 public class Egg {
 	/**所在的位置*/
 	private int row;

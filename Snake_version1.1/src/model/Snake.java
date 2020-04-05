@@ -5,29 +5,35 @@ import java.awt.Graphics;
 import java.awt.Rectangle;
 import java.awt.event.KeyEvent;
 
-/**
- * @author yhyf
- */
+ /**
+  * @title: Snake
+  * @author: chenqi
+  * @description: 蛇类
+  * @date: 2020/4/3
+  */
 public class Snake {
 	private static final int BLOCK_WIDTH = SnakeFrame.BLOCK_WIDTH;
 	private static final int BLOCK_HEIGHT = SnakeFrame.BLOCK_HEIGHT;
 	private static final int ROW_LIMIT = 2;
 	private static final int COL_LIMIT = 0;
-	
+
 	private Node head = null;
-	private Node tail = null;	
-	
+	private Node tail = null;
+
 	private SnakeFrame sf;
 	private Node node = new Node(3,4,Direction.D);
-	
+
 	private int size = 0;
+
+
 	public Snake(SnakeFrame sf) {
 		head = node;
 		tail = node;
 		size ++;
 		this.sf = sf ;
-		
+
 	}
+
 
 	public void draw(Graphics g){
 		if(head==null){
@@ -36,7 +42,7 @@ public class Snake {
 		move();
 		for(Node node = head;node!=null;node = node.next){
 			node.draw(g);
-		}	
+		}
 	}
 	/**
 	 * 先在头部添加一个节点，然后删除尾部的节点，完成移动
@@ -88,7 +94,7 @@ public class Snake {
 				;
 
 		}
-		
+
 		node.next = head;
 		head.pre = node;
 		head = node;
@@ -127,7 +133,7 @@ public class Snake {
 	public Rectangle getRect(){
 		return new Rectangle(head.col*BLOCK_WIDTH, head.row*BLOCK_HEIGHT, BLOCK_WIDTH, BLOCK_HEIGHT);
 	}
-	
+
 	public boolean eatEgg(Egg egg){
 		/**碰撞检测*/
 		if(this.getRect().intersects(egg.getRect())){
@@ -139,7 +145,7 @@ public class Snake {
 			return false;
 		}
 	}
-	
+
 	public class Node {
 
 
@@ -150,10 +156,10 @@ public class Snake {
 		private int col;
 		/**方向*/
 		private Direction dir ;
-		
+
 		private Node pre;
 		private Node next;
-		
+
 		public Node(int row, int col, Direction dir) {
 			this.row = row;
 			this.col = col;
@@ -164,7 +170,7 @@ public class Snake {
 			Color c = g.getColor();
 			g.setColor(Color.BLACK);
 			g.fillRect(col*BLOCK_WIDTH, row*BLOCK_HEIGHT, BLOCK_WIDTH, BLOCK_HEIGHT);
-			g.setColor(c);		
+			g.setColor(c);
 		}
 	}
 
