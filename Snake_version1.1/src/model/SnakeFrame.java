@@ -209,7 +209,6 @@ public class SnakeFrame extends Frame{
 		 * 函数功能：重新开始一局
 		 */
 		public void reStart(){
-			System.out.print("restart2");
 			sf.bGameOver = false;
 			this.pause = false;
 			snake = new Snake(sf);
