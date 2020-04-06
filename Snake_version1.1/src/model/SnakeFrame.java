@@ -41,7 +41,7 @@ public class SnakeFrame extends Frame{
 		this.score = score;
 	}
 
-	//画图的线程对象
+
 	private MyPaintThread paintThread = new MyPaintThread();
 
 	/**线程池*/
@@ -147,6 +147,33 @@ public class SnakeFrame extends Frame{
 		
 		
 	}
+	 /**
+	  * @title: paint
+	  * @description: 画图
+	  * @param: [g]
+	  * @return: void
+	  * @date: 2020/4/5
+	  * @throws
+	  */
+
+	 @Override
+	 public void paint(Graphics g) {
+
+		 Color c = g.getColor();
+		 g.setColor(Color.GRAY);
+
+		 /* 将界面画成由ROW*COL的方格构成,两个for循环即可解决*/
+		 for(int i = 0;i<ROW;i++){
+			 g.drawLine(0, i*BLOCK_HEIGHT, COL*BLOCK_WIDTH,i*BLOCK_HEIGHT );
+		 }
+		 for(int i=0;i<COL;i++){
+			 g.drawLine(i*BLOCK_WIDTH, 0 , i*BLOCK_WIDTH ,ROW*BLOCK_HEIGHT);
+		 }
+
+		 g.setColor(c);
+	 }
+
+
 
 	 /**
 	  * @title: displaySomeInfor
@@ -168,33 +195,6 @@ public class SnakeFrame extends Frame{
 	}
 
 
-	 /**
-	  * @title: paint
-	  * @description: 画图
-	  * @param: [g]
-	  * @return: void
-	  * @date: 2020/4/5
-	  * @throws
-	  */
-
-	@Override
-	public void paint(Graphics g) {
-
-		Color c = g.getColor();
-		g.setColor(Color.GRAY);
-
-		/* 将界面画成由ROW*COL的方格构成,两个for循环即可解决*/
-		for(int i = 0;i<ROW;i++){
-			g.drawLine(0, i*BLOCK_HEIGHT, COL*BLOCK_WIDTH,i*BLOCK_HEIGHT );
-		}
-		for(int i=0;i<COL;i++){
-			g.drawLine(i*BLOCK_WIDTH, 0 , i*BLOCK_WIDTH ,ROW*BLOCK_HEIGHT);
-		}
-		
-		g.setColor(c);
-	}
-	
-	
 
 	 /**
 	  * @title: MyPaintThread
