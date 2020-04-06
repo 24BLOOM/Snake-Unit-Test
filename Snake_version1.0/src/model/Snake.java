@@ -141,6 +141,13 @@ public class Snake {
 			return false;
 		}
 	}
+
+	 /**
+	  * @title: Node
+	  * @author: yhyf
+	  * @description: 蛇节点类
+	  * @date: 2020/3/30
+	  */
 	
 	public class Node {
 		

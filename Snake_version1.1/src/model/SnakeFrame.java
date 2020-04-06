@@ -15,7 +15,6 @@ import java.util.concurrent.TimeUnit;
 
 import com.google.common.util.concurrent.ThreadFactoryBuilder;
 
-
  /**
   * @title: SnakeFrame
   * @author: chenqi
@@ -23,13 +22,25 @@ import com.google.common.util.concurrent.ThreadFactoryBuilder;
   * @date: 2020/4/3
   */
 public class SnakeFrame extends Frame{
+
+	public static final int HAVE_RUN = 1;
+	public static final int HAVE_NOT_RUN = 0;
+
+	 /**是否运行键盘响应*/
+	public static int tested = HAVE_NOT_RUN;
+	/**是否更新*/
+	public static int isUpdated = HAVE_NOT_RUN;
+
 	/**方格的宽度和长度*/
 	public static final int BLOCK_WIDTH = 15 ;
 	public static final int BLOCK_HEIGHT = 15 ;
 	/**界面的方格的行数和列数*/
 	public static final int ROW = 40;
 	public static final int COL = 40;
-	
+
+	/**构造方法*/
+	public SnakeFrame(){}
+
 	/**得分*/
 	private int score = 0;
 
@@ -43,8 +54,11 @@ public class SnakeFrame extends Frame{
 
 
 	private MyPaintThread paintThread = new MyPaintThread();
+	public MyPaintThread getPaintThread() {
+		 return paintThread;
+	}
 
-	/**线程池*/
+	 /**线程池*/
 	ThreadFactory namedThreadFactory = new ThreadFactoryBuilder()
 			.setNameFormat("demo-pool-%d").build();
 	ThreadPoolExecutor  paintThreadPool = new ThreadPoolExecutor(1, 1,
@@ -53,13 +67,21 @@ public class SnakeFrame extends Frame{
 
 	/**缓冲图像*/
 	private Image offScreenImage = null;
-	
+	public void setOffScreenImage(Image offScreenImage) {
+		this.offScreenImage = offScreenImage;
+	}
+
 	private Snake snake = new Snake(this);
 	
 	private Egg egg = new Egg();
 	
 	private static SnakeFrame sf =null;
-	
+
+	KeyMonitor keyMon = new KeyMonitor();
+	public KeyMonitor getKeyMon() {
+		 return keyMon;
+	}
+
 	public static void main(String[] args) {
 		sf = new SnakeFrame();
 		sf.launch();
@@ -92,19 +114,26 @@ public class SnakeFrame extends Frame{
 		this.setVisible(true);
 		
 		//为界面添加监听事件
-		this.addKeyListener(new KeyMonitor());
+		this.addKeyListener(keyMon);
 
 		paintThreadPool.execute(paintThread);
 
 	}
 	
 	
-	private boolean bGameOver = false;
+	private static boolean bGameOver = false;
 
 	public void gameOver(){
 		bGameOver = true;
 	}
 
+	public boolean getBGameOver() {
+		return bGameOver;
+	}
+
+	public void setBGameOver(boolean bGameOver) {
+		SnakeFrame.bGameOver = bGameOver;
+	}
 
 
 	 /**
@@ -144,7 +173,8 @@ public class SnakeFrame extends Frame{
 		}
 		egg.draw(g);
 		displaySomeInfor(g);
-		
+
+		isUpdated = HAVE_RUN;
 		
 	}
 	 /**
@@ -202,11 +232,23 @@ public class SnakeFrame extends Frame{
 	  * @description: 画图线程类
 	  * @date: 2020/4/3
 	  */
-	private class MyPaintThread implements Runnable{
+	protected class MyPaintThread implements Runnable{
 
 		//running不能改变，改变后则线程结束
 		private static final boolean RUNNING = true;
 		private boolean  pause = false;
+
+		/**构造方法*/
+		public MyPaintThread(){}
+
+		public boolean getPause() {
+			 return pause;
+		}
+
+		public void setPause(boolean pause) {
+			 this.pause = pause;
+		}
+
 		@Override
 		public void run() {
 			while(RUNNING){
@@ -267,8 +309,8 @@ public class SnakeFrame extends Frame{
 		  */
 
 		public void dead(){
-
 			pause = true;
+			isUpdated = HAVE_RUN;
 		}
 
 		 /**
@@ -281,7 +323,7 @@ public class SnakeFrame extends Frame{
 		  */
 		public void reStart(){
 
-			sf.bGameOver = false;
+			bGameOver = false;
 			this.pause = false;
 			snake = new Snake(sf);
 	
@@ -296,11 +338,21 @@ public class SnakeFrame extends Frame{
 	  * @description: 键盘监听
 	  * @date: 2020/4/3
 	  */
-	private class KeyMonitor extends KeyAdapter{
-		
+	protected class KeyMonitor extends KeyAdapter{
+		int key;
+		public void setKey(int key) {
+			 this.key = key;
+		}
+		public int getKey() {
+			 return key;
+		}
+
+		 /**构造方法*/
+		public KeyMonitor(){}
+
 		@Override
 		public void keyPressed(KeyEvent e) {
-			int key = e.getKeyCode();
+			key = e.getKeyCode();
 
 			if(key == KeyEvent.VK_SPACE){//暂停
 				
@@ -316,7 +368,8 @@ public class SnakeFrame extends Frame{
 			}
 			else{
 				snake.keyPressed(e);
-			}			
+			}
+			tested = HAVE_RUN;
 		}
 		
 	}

@@ -103,7 +103,8 @@ public class Snake {
 	}
 
 	public void keyPressed(KeyEvent e) {
-		int key = e.getKeyCode();
+		//int key = e.getKeyCode();
+		int key = this.sf.getKeyMon().getKey();
 		switch(key){
 		case KeyEvent.VK_LEFT :
 			if(head.dir!=Direction.R){

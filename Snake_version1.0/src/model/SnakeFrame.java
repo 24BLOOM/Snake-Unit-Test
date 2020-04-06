@@ -46,7 +46,16 @@ public class SnakeFrame extends Frame{
 	public static void main(String[] args) {
 		new SnakeFrame().launch();
 	}
-	
+
+	 /**
+	  * @title: launch
+	  * @description: 启动游戏
+	  * @param: []
+	  * @return: void
+	  * @date: 2020/3/31
+	  * @throws
+	  */
+
 	public void launch(){
 		
 		this.setTitle("Snake");
@@ -76,10 +85,16 @@ public class SnakeFrame extends Frame{
 	public void gameOver(){
 		bGameOver = true;
 	}
-	
-	/**
-	 * 重写update方法
-	 */
+
+	 /**
+	  * @title: update
+	  * @description: 重写updata方法 更新画布
+	  * @param: [g]
+	  * @return: void
+	  * @date: 2020/3/31
+	  * @throws
+	  */
+
 	@Override
 	public void update(Graphics g) {
 		/**双缓冲解决闪烁*/
@@ -107,6 +122,14 @@ public class SnakeFrame extends Frame{
 		
 	}
 
+	 /**
+	  * @title: paint
+	  * @description: 画图
+	  * @param: [g]
+	  * @return: void
+	  * @date: 2020/4/5
+	  * @throws
+	  */
 	@Override
 	public void paint(Graphics g) {
 		Color c = g.getColor();
@@ -123,12 +146,15 @@ public class SnakeFrame extends Frame{
 		
 		g.setColor(c);
 	}
-	
 
-	
-	/**
-	 * 重画线程类
-	 */
+
+
+	 /**
+	  * @title: MyPaintThread
+	  * @author: chenqi
+	  * @description: 画图线程类
+	  * @date: 2020/3/31
+	  */
 	private class MyPaintThread implements Runnable{
 		private boolean running = true;
 		@Override
@@ -146,7 +172,12 @@ public class SnakeFrame extends Frame{
 		
 	}
 
-	/**键盘监听*/
+	 /**
+	  * @title: KeyMonitor
+	  * @author: chenqi
+	  * @description: 键盘监听
+	  * @date: 2020/3/31
+	  */
 	private class KeyMonitor extends KeyAdapter{
 
 		@Override
