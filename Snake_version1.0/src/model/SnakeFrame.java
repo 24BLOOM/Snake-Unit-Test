@@ -127,7 +127,7 @@ public class SnakeFrame extends Frame{
 	  * @description: 画图
 	  * @param: [g]
 	  * @return: void
-	  * @date: 2020/4/5
+	  * @date: 2020/3/31
 	  * @throws
 	  */
 	@Override
