@@ -176,12 +176,25 @@ public class Snake {
 	public class Node {
 
 
-		/**
+		 public int getRow() {
+			 return row;
+		 }
+
+		 public int getCol() {
+			 return col;
+		 }
+
+		 /**
 		 * 每个节点的位置
 		 */
 		private int row;
 		private int col;
-		/**方向*/
+
+		 public Direction getDir() {
+			 return dir;
+		 }
+
+		 /**方向*/
 		private Direction dir ;
 
 		private Node pre;
