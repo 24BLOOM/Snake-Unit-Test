@@ -132,13 +132,14 @@ public class Snake {
 	}
 
 	/**用于碰撞检测*/
-	public Rectangle getRect(){
-		return new Rectangle(head.col*BLOCK_WIDTH, head.row*BLOCK_HEIGHT, BLOCK_WIDTH, BLOCK_HEIGHT);
+	public Rectangle getRect(int x,int y){
+		return new Rectangle(x*BLOCK_WIDTH, y*BLOCK_HEIGHT, BLOCK_WIDTH, BLOCK_HEIGHT);
+
 	}
 
 	public boolean eatEgg(Egg egg){
 		/**碰撞检测*/
-		if(this.getRect().intersects(egg.getRect())){
+		if(this.getRect(head.col,head.row).intersects(egg.getRect(egg.getCol(),egg.getRow()))){
 			addNodeInHead();
 			egg.reAppear();
 			return true;

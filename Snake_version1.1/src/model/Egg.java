@@ -11,8 +11,18 @@ import java.util.Random;
  * @date 2020/4/3
  */
 public class Egg {
+
+	public int getRow() {
+		return row;
+	}
+
 	/** 所在的位置 */
 	private int row;
+
+	public int getCol() {
+		return col;
+	}
+
 	private int col;
 	/** 大小 */
 	private static final int BLOCK_WIDTH = SnakeFrame.BLOCK_WIDTH;
@@ -36,12 +46,8 @@ public class Egg {
 		this.row = (R.nextInt(SnakeFrame.ROW-2))+2;
 		this.col = (R.nextInt(SnakeFrame.COL-2))+2;
 	} 
-	
-	public void draw(Graphics g){
-		Color c= g.getColor();
-		g.setColor(color);
-		g.fillOval(col*BLOCK_WIDTH, row*BLOCK_HEIGHT, BLOCK_WIDTH, BLOCK_HEIGHT);
-		g.setColor(c);
+
+	private void changeColor(){
 		/**改变下一次的颜色*/
 		if(color==Color.RED){
 			color = Color.BLUE;
@@ -49,11 +55,26 @@ public class Egg {
 		else{
 			color = Color.RED;
 		}
+	}
+
+	public void draw(Graphics g) throws NullPointerException{
+		if (g ==null){
+			System.out.println("g is null");
+		}
+
+		Color c= g.getColor();
+
+		System.out.println("g is not null");
+		g.setColor(color);
+		g.fillOval(col*BLOCK_WIDTH, row*BLOCK_HEIGHT, BLOCK_WIDTH, BLOCK_HEIGHT);
+		g.setColor(c);
+		changeColor();
 		
 	}
 	/**用于碰撞检测 */
-	public Rectangle getRect(){
-		return new Rectangle(col*BLOCK_WIDTH, row*BLOCK_HEIGHT, BLOCK_WIDTH, BLOCK_HEIGHT);
+	public Rectangle getRect(int x,int y){
+		//return new Rectangle(col*BLOCK_WIDTH, row*BLOCK_HEIGHT, BLOCK_WIDTH, BLOCK_HEIGHT);
+		return new Rectangle(x*BLOCK_WIDTH, y*BLOCK_HEIGHT, BLOCK_WIDTH, BLOCK_HEIGHT);
 	}
 	
 }
