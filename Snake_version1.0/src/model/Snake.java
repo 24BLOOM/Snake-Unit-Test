@@ -18,12 +18,24 @@ public class Snake {
 	private static final int COL_LIMIT = 0;
 	
 	private Node head = null;
+	public Node getHead(){
+		return this.head;
+	}
+	public void setHead(Node head){
+		this.head = head;
+	}
 	private Node tail = null;	
 	
 	private SnakeFrame sf;
+	public SnakeFrame getSf(){
+		return sf;
+	}
 	private Node node = new Node(3,4,Direction.D);
 	
 	private int size = 0;
+
+	private int keyCode;
+
 	public Snake(SnakeFrame sf) {
 		head = node;
 		tail = node;
@@ -51,7 +63,7 @@ public class Snake {
 		deleteNodeInTail();
 	}
 
-	private void checkDead() {
+	protected void checkDead() {
 		//头结点的边界检查
 		if(head.row<ROW_LIMIT||head.row>SnakeFrame.ROW||head.col<COL_LIMIT||head.col>SnakeFrame.COL){
 			this.sf.gameOver();
@@ -59,7 +71,7 @@ public class Snake {
 		
 		//头结点与其它结点相撞
 		for(Node node =head.next;node!=null;node = node.next){
-			if(head.row==node.row&&head.col == node.col){
+			if(head.row==node.row && head.col==node.col){
 				this.sf.gameOver();
 			}
 		}
@@ -97,44 +109,52 @@ public class Snake {
 
 	}
 
-	public void keyPressed(KeyEvent e) {
-		int key = e.getKeyCode();
-		switch(key){
-		case KeyEvent.VK_LEFT :
-			if(head.dir!=Direction.R){
-				head.dir = Direction.L;
-			}
-			break;
-		case KeyEvent.VK_UP :
-			if(head.dir!=Direction.D){
-				head.dir = Direction.U;
-			}
-			break;
-		case KeyEvent.VK_RIGHT :
-			if(head.dir!=Direction.L){
-				head.dir = Direction.R;
-			}
-			break;
-		case KeyEvent.VK_DOWN :
-			if(head.dir!=Direction.U){
-				head.dir = Direction.D;
-			}
-			break;
+	public void keyPressed(int key) {
+		keyCode = key;
+		head.dir = switchHeadDir(keyCode,head.dir);
+
+	}
+
+	public Direction switchHeadDir(int keyCode,Direction HeadDir) {
+		Direction nextDir = HeadDir;
+		switch(keyCode){
+			case KeyEvent.VK_LEFT :
+				if(HeadDir!=Direction.R){
+					nextDir = Direction.L;
+				}
+				break;
+			case KeyEvent.VK_UP :
+				if(HeadDir!=Direction.D){
+					nextDir = Direction.U;
+				}
+				break;
+			case KeyEvent.VK_RIGHT :
+				if(HeadDir!=Direction.L){
+					nextDir = Direction.R;
+				}
+				break;
+			case KeyEvent.VK_DOWN :
+				if(HeadDir!=Direction.U){
+					nextDir = Direction.D;
+				}
+				break;
 			default:
 				;
 		}
+		return nextDir;
 	}
 
 	/**用于碰撞检测*/
-	public Rectangle getRect(){
-		return new Rectangle(head.col*BLOCK_WIDTH, head.row*BLOCK_HEIGHT, BLOCK_WIDTH, BLOCK_HEIGHT);
+	public Rectangle getRect(int x,int y){
+		return new Rectangle(x*BLOCK_WIDTH, y*BLOCK_HEIGHT, BLOCK_WIDTH, BLOCK_HEIGHT);
 	}
 	
 	public boolean eatEgg(Egg egg){
 		/**碰撞检测*/
-		if(this.getRect().intersects(egg.getRect())){
+		if(this.getRect(head.col,head.row).intersects(egg.getRect(egg.getCol(),egg.getRow()))){
 			addNodeInHead();
 			egg.reAppear();
+			sf.setScore(sf.getScore()+5);
 			return true;
 		}
 		else{
@@ -156,12 +176,24 @@ public class Snake {
 		 * 每个节点的位置
 		 */
 		private int row;
+		public void setRow(int row){
+			this.row = row;
+		}
 		private int col;
+		public void setCol(int col){
+			this.col = col;
+		}
 		/**方向*/
 		private Direction dir ;
 		
 		private Node pre;
 		private Node next;
+		public void setNext(Node next){
+			this.next = next;
+		}
+		public Node getNext(){
+			return this.next;
+		}
 		
 		public Node(int row, int col, Direction dir) {
 			this.row = row;

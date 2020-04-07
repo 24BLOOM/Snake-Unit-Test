@@ -42,6 +42,13 @@ public class SnakeFrame extends Frame{
 	private Snake snake = new Snake(this);
 	
 	private Egg egg = new Egg();
+
+	KeyMonitor keyMonitor = new KeyMonitor();
+	public KeyMonitor getKeyMonitor() {
+		 return keyMonitor;
+	 }
+
+	 MyPaintThread paintThread;
 	
 	public static void main(String[] args) {
 		new SnakeFrame().launch();
@@ -55,7 +62,6 @@ public class SnakeFrame extends Frame{
 	  * @date: 2020/3/31
 	  * @throws
 	  */
-
 	public void launch(){
 		
 		this.setTitle("Snake");
@@ -74,14 +80,21 @@ public class SnakeFrame extends Frame{
 		this.setVisible(true);
 		
 		//为界面添加监听事件
-		this.addKeyListener(new KeyMonitor());
-		
-		new Thread(new MyPaintThread()).start();
+		this.addKeyListener(keyMonitor);
+
+		paintThread = new MyPaintThread();
+		new Thread(paintThread).start();
 	}
 	
 	
-	private boolean bGameOver = false;
-	
+	private static boolean bGameOver = false;
+	public boolean getBGameOver(){
+		return bGameOver;
+	}
+	public void setBGameOver(boolean gameOver){
+		bGameOver = gameOver;
+	}
+
 	public void gameOver(){
 		bGameOver = true;
 	}
@@ -109,14 +122,11 @@ public class SnakeFrame extends Frame{
 		
 		if(bGameOver){
 			g.drawString("游戏结束！！！", ROW/2*BLOCK_HEIGHT, COL/2*BLOCK_WIDTH);
+			paintThread.dead();
 		}
 		
 		snake.draw(g);
-		boolean bSuccess=snake.eatEgg(egg);
-		//吃一个加5分
-		if(bSuccess){
-			score+=5;
-		}
+		snake.eatEgg(egg);
 		egg.draw(g);
 		g.drawString("得分:"+score, 5*BLOCK_HEIGHT, 5*BLOCK_WIDTH);
 		
@@ -147,8 +157,6 @@ public class SnakeFrame extends Frame{
 		g.setColor(c);
 	}
 
-
-
 	 /**
 	  * @title: MyPaintThread
 	  * @author: chenqi
@@ -157,9 +165,20 @@ public class SnakeFrame extends Frame{
 	  */
 	private class MyPaintThread implements Runnable{
 		private boolean running = true;
+		private boolean pause = false;
+
 		@Override
 		public void run() {
 			while(running){
+				if(pause){
+					try {
+						Thread.sleep(100);
+					} catch (InterruptedException e) {
+						e.printStackTrace();
+					}
+					continue;
+				}
+
 				repaint();
 				try {
 					Thread.sleep(100);
@@ -169,7 +188,10 @@ public class SnakeFrame extends Frame{
 			}
 			
 		}
-		
+
+		public void dead(){
+			pause = true;
+		}
 	}
 
 	 /**
@@ -180,9 +202,21 @@ public class SnakeFrame extends Frame{
 	  */
 	private class KeyMonitor extends KeyAdapter{
 
+		int key;
+		public void setKey(int key) {
+			this.key = key;
+		}
+		public int getKey() {
+			 return key;
+		}
+
+		/**构造方法*/
+		public KeyMonitor(){}
+
 		@Override
 		public void keyPressed(KeyEvent e) {
-			snake.keyPressed(e);
+			key = e.getKeyCode();
+			snake.keyPressed(key);
 		}
 		
 	}

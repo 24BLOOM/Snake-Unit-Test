@@ -1,50 +1,39 @@
 package model;
 
+import org.junit.After;
+import org.junit.Before;
+
 import static org.junit.Assert.*;
 
 /**
  * @version V1.0
  * @Title:
  * @Package
- * @Description:
+ * @Description: 测试SnakeFrame类中的gameOver方法
  * @author: chenqi
- * @date:
+ * @date: 2020/4/2
  */
 public class SnakeFrameTest {
+    private SnakeFrame sf;
 
-    @org.junit.Before
+    @Before
     public void setUp() throws Exception {
+        sf = new SnakeFrame();
     }
 
-    @org.junit.After
+    @After
     public void tearDown() throws Exception {
-    }
-
-    @org.junit.Test
-    public void getScore() {
-    }
-
-    @org.junit.Test
-    public void setScore() {
-    }
-
-    @org.junit.Test
-    public void main() {
-    }
-
-    @org.junit.Test
-    public void launch() {
+        sf = null;
     }
 
     @org.junit.Test
     public void gameOver() {
-    }
+        boolean exp = true;
+        SnakeFrame sf = new SnakeFrame();
 
-    @org.junit.Test
-    public void update() {
-    }
+        sf.gameOver();
+        boolean res = sf.getBGameOver();
 
-    @org.junit.Test
-    public void paint() {
+        assertTrue(res==exp);
     }
 }

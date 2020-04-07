@@ -28,6 +28,14 @@ public class Egg {
 		this.col = col;
 	}
 
+	public int getRow(){
+		return this.row;
+	}
+	public int getCol()
+	{
+		return this.col;
+	}
+
 	public Egg() {
 		this((R.nextInt(SnakeFrame.ROW-2))+2,(R.nextInt(SnakeFrame.COL-2))+2);
 	}
@@ -37,12 +45,8 @@ public class Egg {
 		this.row = (R.nextInt(SnakeFrame.ROW-2))+2;
 		this.col = (R.nextInt(SnakeFrame.COL-2))+2;
 	} 
-	
-	public void draw(Graphics g){
-		Color c= g.getColor();
-		g.setColor(color);
-		g.fillOval(col*BLOCK_WIDTH, row*BLOCK_HEIGHT, BLOCK_WIDTH, BLOCK_HEIGHT);
-		g.setColor(c);
+
+	public void changeColor(){
 		/**改变下一次的颜色*/
 		if(color==Color.RED){
 			color = Color.BLUE;
@@ -50,12 +54,20 @@ public class Egg {
 		else{
 			color = Color.RED;
 		}
+	}
+
+	public void draw(Graphics g){
+		Color c= g.getColor();
+		g.setColor(color);
+		g.fillOval(col*BLOCK_WIDTH, row*BLOCK_HEIGHT, BLOCK_WIDTH, BLOCK_HEIGHT);
+		g.setColor(c);
+		changeColor();
 		
 	}
 
 	/**用于碰撞检测*/
-	public Rectangle getRect(){
-		return new Rectangle(col*BLOCK_WIDTH, row*BLOCK_HEIGHT, BLOCK_WIDTH, BLOCK_HEIGHT);
+	public Rectangle getRect(int x,int y){
+		return new Rectangle(x*BLOCK_WIDTH, y*BLOCK_HEIGHT, BLOCK_WIDTH, BLOCK_HEIGHT);
 	}
 	
 }
