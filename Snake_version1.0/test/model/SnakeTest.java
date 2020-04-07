@@ -44,7 +44,7 @@ public class SnakeTest {
         this.expScore = expScore;
     }
 
-    @Parameterized.Parameters(name="{index}:SFKeyPressed[{0},{1},{2},{3},{4}]=[{5},{6}]")
+    @Parameterized.Parameters(name="{index}:eatEgg[{0},{1},{2},{3},{4}]=[{5},{6}]")
     public static Collection testData(){
         return Arrays.asList( new Object[][]{
                 {15,20,15,20,0,true,5},
