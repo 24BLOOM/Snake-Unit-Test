@@ -26,29 +26,46 @@ public class EggTest {
 
     @org.junit.After
     public void tearDown() throws Exception {
+        egg = null;
     }
 
-    @org.junit.Test
+    @org.junit.Ignore
     public void reAppear() {
     }
 
     @org.junit.Test
-    public void changeColor() throws InvocationTargetException,NoSuchMethodException,NoSuchFieldException,IllegalAccessException{
+    public void changeColorTest1() throws InvocationTargetException,NoSuchMethodException,NoSuchFieldException,IllegalAccessException{
         Method method = egg.getClass().getDeclaredMethod("changeColor", null);
         method.setAccessible(true);
         Field field = egg.getClass().getDeclaredField("color");
         field.setAccessible(true);
-        Object after = field.get(egg);
-        System.out.print(after);
+        field.set(egg,Color.RED);
         method.invoke(egg, null);
-        after = field.get(egg);
-        System.out.print(after);
+        Object after = field.get(egg);
+        assertEquals(Color.BLUE,after);
 
 
 
     }
 
     @org.junit.Test
+    public void changeColorTest2() throws InvocationTargetException,NoSuchMethodException,NoSuchFieldException,IllegalAccessException{
+        Method method = egg.getClass().getDeclaredMethod("changeColor", null);
+        method.setAccessible(true);
+        Field field = egg.getClass().getDeclaredField("color");
+        field.setAccessible(true);
+        field.set(egg,Color.BLUE);
+        method.invoke(egg, null);
+        Object after = field.get(egg);
+
+
+        assertEquals(Color.RED,after);
+
+
+
+    }
+
+    @org.junit.Ignore
     public void draw() throws IllegalArgumentException, IllegalAccessException,NoSuchFieldException {
         Field field = egg.getClass().getDeclaredField("color");
         field.setAccessible(true);
@@ -63,7 +80,7 @@ public class EggTest {
 
     }
 
-    @org.junit.Test
+    @org.junit.Ignore
     public void getRect() {
     }
 }

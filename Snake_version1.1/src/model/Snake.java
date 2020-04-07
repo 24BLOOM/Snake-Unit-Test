@@ -26,6 +26,8 @@ public class Snake {
 
 	private int size = 0;
 
+	private int keyCode;
+
 
 	public Snake(SnakeFrame sf) {
 		head = node;
@@ -33,13 +35,16 @@ public class Snake {
 		size ++;
 		this.sf = sf ;
 
+
+
 	}
 
 
 	public void draw(Graphics g){
-		if(head==null){
+		/**if(head==null){
+
 			return ;
-		}
+		}**/
 		move();
 		for(Node node = head;node!=null;node = node.next){
 			node.draw(g);
@@ -102,33 +107,44 @@ public class Snake {
 
 	}
 
-	public void keyPressed(KeyEvent e) {
-		//int key = e.getKeyCode();
-		int key = this.sf.getKeyMon().getKey();
-		switch(key){
-		case KeyEvent.VK_LEFT :
-			if(head.dir!=Direction.R){
-				head.dir = Direction.L;
-			}
-			break;
-		case KeyEvent.VK_UP :
-			if(head.dir!=Direction.D){
-				head.dir = Direction.U;
-			}
-			break;
-		case KeyEvent.VK_RIGHT :
-			if(head.dir!=Direction.L){
-				head.dir = Direction.R;
-			}
-			break;
-		case KeyEvent.VK_DOWN :
-			if(head.dir!=Direction.U){
-				head.dir = Direction.D;
-			}
-			break;
+	public int getkeyCode(){
+		return this.sf.getKeyMonitor().getKey();
+	}
+
+	private Direction switchHeadDir(int keyCode,Direction HeadDir){
+		Direction nextDir = HeadDir;
+		switch(keyCode){
+			case KeyEvent.VK_LEFT :
+				if(HeadDir!=Direction.R){
+					nextDir = Direction.L;
+				}
+				break;
+			case KeyEvent.VK_UP :
+				if(HeadDir!=Direction.D){
+					nextDir = Direction.U;
+				}
+				break;
+			case KeyEvent.VK_RIGHT :
+				if(HeadDir!=Direction.L){
+					nextDir = Direction.R;
+				}
+				break;
+			case KeyEvent.VK_DOWN :
+				if(HeadDir!=Direction.U){
+					nextDir = Direction.D;
+				}
+				break;
 			default:
 				;
 		}
+		return nextDir;
+
+	}
+	public void keyPressed() {
+		//int key = e.getKeyCode();
+		keyCode = getkeyCode();
+		head.dir = switchHeadDir(keyCode,head.dir);
+
 	}
 
 	/**用于碰撞检测*/
@@ -137,11 +153,13 @@ public class Snake {
 
 	}
 
+
 	public boolean eatEgg(Egg egg){
 		/**碰撞检测*/
 		if(this.getRect(head.col,head.row).intersects(egg.getRect(egg.getCol(),egg.getRow()))){
 			addNodeInHead();
 			egg.reAppear();
+			sf.setScore(sf.getScore()+5);
 			return true;
 		}
 		else{

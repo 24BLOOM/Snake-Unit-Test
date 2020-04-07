@@ -58,13 +58,11 @@ public class Egg {
 	}
 
 	public void draw(Graphics g) throws NullPointerException{
-		if (g ==null){
-			System.out.println("g is null");
-		}
+
 
 		Color c= g.getColor();
 
-		System.out.println("g is not null");
+
 		g.setColor(color);
 		g.fillOval(col*BLOCK_WIDTH, row*BLOCK_HEIGHT, BLOCK_WIDTH, BLOCK_HEIGHT);
 		g.setColor(c);

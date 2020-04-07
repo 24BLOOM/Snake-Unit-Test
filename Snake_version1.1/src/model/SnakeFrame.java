@@ -77,10 +77,12 @@ public class SnakeFrame extends Frame{
 	
 	private static SnakeFrame sf =null;
 
-	KeyMonitor keyMon = new KeyMonitor();
-	public KeyMonitor getKeyMon() {
-		 return keyMon;
+	KeyMonitor keyMonitor = new KeyMonitor();
+
+	public KeyMonitor getKeyMonitor() {
+		 return keyMonitor;
 	}
+
 
 	public static void main(String[] args) {
 		sf = new SnakeFrame();
@@ -114,7 +116,7 @@ public class SnakeFrame extends Frame{
 		this.setVisible(true);
 		
 		//为界面添加监听事件
-		this.addKeyListener(keyMon);
+		this.addKeyListener(keyMonitor);
 
 		paintThreadPool.execute(paintThread);
 
@@ -166,15 +168,13 @@ public class SnakeFrame extends Frame{
 		}
 		
 		snake.draw(g);
-		boolean bSuccess=snake.eatEgg(egg);
-		//吃一个加5分
-		if(bSuccess){
-			score+=5;
-		}
+		snake.eatEgg(egg);
+
+
 		egg.draw(g);
 		displaySomeInfor(g);
 
-		isUpdated = HAVE_RUN;
+
 		
 	}
 	 /**
@@ -232,6 +232,7 @@ public class SnakeFrame extends Frame{
 	  * @description: 画图线程类
 	  * @date: 2020/4/3
 	  */
+
 	protected class MyPaintThread implements Runnable{
 
 		//running不能改变，改变后则线程结束
@@ -310,7 +311,7 @@ public class SnakeFrame extends Frame{
 
 		public void dead(){
 			pause = true;
-			isUpdated = HAVE_RUN;
+
 		}
 
 		 /**
@@ -321,12 +322,36 @@ public class SnakeFrame extends Frame{
 		  * @date: 2020/4/3
 		  * @throws
 		  */
-		public void reStart(){
+		public void reStart(SnakeFrame sf){
 
 			bGameOver = false;
+
 			this.pause = false;
+			System.out.println(sf);
 			snake = new Snake(sf);
+
+			sf.setScore(0);
+
+
 	
+		}
+
+		public void switchStatus(int keyCode,SnakeFrame sf){
+			if(keyCode == KeyEvent.VK_SPACE){//暂停
+
+				paintThread.pause();
+			}
+			else if(keyCode == KeyEvent.VK_B){//开始
+
+				paintThread.recover();
+			}
+			else if(keyCode == KeyEvent.VK_F2){//再开一局
+
+				paintThread.reStart(sf);
+			}
+			else{
+				snake.keyPressed();
+			}
 		}
 		
 	}
@@ -353,23 +378,8 @@ public class SnakeFrame extends Frame{
 		@Override
 		public void keyPressed(KeyEvent e) {
 			key = e.getKeyCode();
+			paintThread.switchStatus(key,sf);
 
-			if(key == KeyEvent.VK_SPACE){//暂停
-				
-				paintThread.pause();
-			}
-			else if(key == KeyEvent.VK_B){//开始
-				
-				paintThread.recover();
-			}
-			else if(key == KeyEvent.VK_F2){//再开一局
-
-				paintThread.reStart();
-			}
-			else{
-				snake.keyPressed(e);
-			}
-			tested = HAVE_RUN;
 		}
 		
 	}

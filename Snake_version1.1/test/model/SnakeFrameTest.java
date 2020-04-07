@@ -2,6 +2,7 @@ package model;
 
 import org.junit.After;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runners.Parameterized;
 
@@ -20,28 +21,33 @@ import static org.junit.Assert.*;
  * @date:
  */
 public class SnakeFrameTest {
+    private SnakeFrame sf;
 
     @Before
     public void setUp() throws Exception {
+        sf = new SnakeFrame();
     }
 
     @After
     public void tearDown() throws Exception {
+        sf = null;
     }
 
-    @Test
+
+
+    @Ignore
     public void getScore() {
     }
 
-    @Test
+    @Ignore
     public void setScore() {
     }
 
-    @Test
+    @Ignore
     public void main() {
     }
 
-    @Test
+    @Ignore
     public void launch() {
     }
 
@@ -56,20 +62,22 @@ public class SnakeFrameTest {
         assertTrue(res==exp);
     }
 
-    @Test
+    @Ignore
     public void update() {
     }
 
-    @Test
+    @Ignore
     public void displaySomeInfor() {
     }
 
-    @Test
+    @Ignore
     public void paint() {
     }
 
-    @Test
+    @Ignore
     public void KeyPressed(){
 
     }
+
+
 }
