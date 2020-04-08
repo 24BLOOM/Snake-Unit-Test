@@ -141,7 +141,7 @@ public class Snake {
 
 	}
 	public void keyPressed() {
-		//int key = e.getKeyCode();
+
 		keyCode = getkeyCode();
 		head.dir = switchHeadDir(keyCode,head.dir);
 
@@ -198,7 +198,16 @@ public class Snake {
 		private Direction dir ;
 
 		private Node pre;
-		private Node next;
+
+		 public Node getNext() {
+			 return next;
+		 }
+
+		 public void setNext(Node next) {
+			 this.next = next;
+		 }
+
+		 private Node next;
 
 		public Node(int row, int col, Direction dir) {
 			this.row = row;

@@ -19,7 +19,7 @@ import static org.junit.Assert.*;
  * @Title:
  * @Package
  * @Description: 测试Snake类中的switchHeadDir方法
- * @author: chenqi
+ * @author: yhyf
  * @date: 2020/4/2
  */
 @RunWith(Parameterized.class)

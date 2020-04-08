@@ -19,11 +19,11 @@ import static org.junit.Assert.*;
 
 /**
  * @version V1.1
- * @Title:
+ * @Title: SnakeTest
  * @Package
  * @Description:
  * @author: chenqi
- * @date:
+ * @date: 2020/4/4
  */
 
 public class SnakeTest {

@@ -14,7 +14,7 @@ import static org.junit.Assert.*;
  * @Title:
  * @Package
  * @Description: 测试egg类中的changeColor方法
- * @author: chenqi
+ * @author: yhyf
  * @date: 2020/4/2
  */
 public class EggTest {

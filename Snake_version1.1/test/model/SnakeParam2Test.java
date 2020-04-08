@@ -19,11 +19,11 @@ import static org.junit.Assert.*;
 
 /**
  * @version V1.1
- * @Title:
+ * @Title: SnakeParam2Test
  * @Package
- * @Description:
+ * @Description: 使用参数化测试方法对addNodeInHead()编写测试脚本
  * @author: chenqi
- * @date:
+ * @date: 2020/4/5
  */
 @RunWith(Parameterized.class)
 public class SnakeParam2Test {
@@ -39,17 +39,6 @@ public class SnakeParam2Test {
         this.expCol = expCol;
 
     }
-    /**
-     @Parameterized.Parameter
-     public int keyCode;
-
-
-     @Parameterized.Parameter(1)
-     public Direction headDir;
-
-     @Parameterized.Parameter(2)
-     public Direction expectHeadDir;
-     **/
 
     private Direction headDir;
     private  int row;
@@ -58,7 +47,7 @@ public class SnakeParam2Test {
     private int expCol;
     private int expRow;
 
-    @Parameterized.Parameters
+    @Parameterized.Parameters(name="{index}:addNodeInHead[]")
     public static Collection<Object[]> data() {
         return Arrays.asList(new Object[][]{
                 {Direction.L,2,2,2,1},
@@ -84,8 +73,10 @@ public class SnakeParam2Test {
         egg = null;
     }
 
+
     @Test
     public void addNodeInHead() throws InvocationTargetException,NoSuchFieldException,IllegalAccessException,NoSuchMethodException{
+
 
         Method method = snake.getClass().getDeclaredMethod("addNodeInHead" ,null);
         method.setAccessible(true);

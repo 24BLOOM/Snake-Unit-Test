@@ -11,7 +11,7 @@ import static org.junit.Assert.*;
  * @version V1.1
  * @Title: EggTest
  * @Package
- * @Description: 食物测试类
+ * @Description:
  * @author: chenqi
  * @date: 2020/4/3
  */
@@ -50,6 +50,7 @@ public class EggTest {
 
     @org.junit.Test
     public void changeColorTest2() throws InvocationTargetException,NoSuchMethodException,NoSuchFieldException,IllegalAccessException{
+
         Method method = egg.getClass().getDeclaredMethod("changeColor", null);
         method.setAccessible(true);
         Field field = egg.getClass().getDeclaredField("color");
@@ -58,25 +59,12 @@ public class EggTest {
         method.invoke(egg, null);
         Object after = field.get(egg);
 
-
         assertEquals(Color.RED,after);
-
-
 
     }
 
     @org.junit.Ignore
-    public void draw() throws IllegalArgumentException, IllegalAccessException,NoSuchFieldException {
-        Field field = egg.getClass().getDeclaredField("color");
-        field.setAccessible(true);
-        Object after = field.get(egg);
-        System.out.print(after);
-        egg.draw(g);
-        Field field_ = egg.getClass().getDeclaredField("color");
-        field_.setAccessible(true);
-        Object after_ = field.get(egg);
-        System.out.print(after);
-        System.out.print(after_);
+    public void draw() {
 
     }
 

@@ -10,7 +10,7 @@ import static org.junit.Assert.*;
  * @Title:
  * @Package
  * @Description: 测试SnakeFrame类中的gameOver方法
- * @author: chenqi
+ * @author: yhyf
  * @date: 2020/4/2
  */
 public class SnakeFrameTest {

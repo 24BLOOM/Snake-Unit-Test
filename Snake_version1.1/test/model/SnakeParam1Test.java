@@ -21,9 +21,9 @@ import static org.junit.Assert.*;
  * @version V1.1
  * @Title:
  * @Package
- * @Description:
+ * @Description: 使用参数化测试方法对switchHeadDir()编写测试脚本
  * @author: chenqi
- * @date:
+ * @date: 2020/4/4
  */
 @RunWith(Parameterized.class)
 public class SnakeParam1Test {
@@ -36,22 +36,12 @@ public class SnakeParam1Test {
         this.headDir = headDir;
         this.expectHeadDir = expectHeadDir;
     }
-    /**
-     @Parameterized.Parameter
-     public int keyCode;
 
-
-     @Parameterized.Parameter(1)
-     public Direction headDir;
-
-     @Parameterized.Parameter(2)
-     public Direction expectHeadDir;
-     **/
     private int keyCode;
     private Direction headDir;
     private  Direction expectHeadDir;
 
-    @Parameterized.Parameters
+    @Parameterized.Parameters(name="{index}:checkDead[{0},{1}]={2}")
     public static Collection<Object[]> data() {
         return Arrays.asList(new Object[][]{
                 {KeyEvent.VK_LEFT,Direction.D,Direction.L},

@@ -14,13 +14,14 @@ import static org.junit.Assert.*;
 
 /**
  * @version V1.1
- * @Title:
+ * @Title: SnakeFrameTest
  * @Package
  * @Description:
- * @author: chenqi
- * @date:
+ * @author: yhyf
+ * @date: 2020/4/4
  */
 public class SnakeFrameTest {
+
     private SnakeFrame sf;
 
     @Before

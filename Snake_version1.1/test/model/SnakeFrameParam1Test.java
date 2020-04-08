@@ -13,12 +13,12 @@ import java.util.Collection;
 import static org.junit.Assert.assertEquals;
 
 /**
- * @version V1.0
+ * @version V1.1
  * @Title: SnakeFrameParamTest1
  * @Package
- * @Description: 参数化方式测试switchStatus方法
+ * @Description: 使用参数化测试方法为switchStatus()编写测试脚本
  * @author: chenqi
- * @date:
+ * @date: 2020/4/4
  */
 @RunWith(Parameterized.class)
 public class SnakeFrameParam1Test {
@@ -33,17 +33,7 @@ public class SnakeFrameParam1Test {
         this.expBGameOver = expBGameOver;
 
     }
-    /**
-     @Parameterized.Parameter
-     public int keyCode;
 
-
-     @Parameterized.Parameter(1)
-     public Direction headDir;
-
-     @Parameterized.Parameter(2)
-     public Direction expectHeadDir;
-     **/
     private boolean pause;
     private boolean bGameOver;
 
@@ -52,7 +42,7 @@ public class SnakeFrameParam1Test {
     private boolean expBGameOver;
 
 
-    @Parameterized.Parameters
+    @Parameterized.Parameters(name="{index}:switchStatus[{2},keyCode]")
     public static Collection<Object[]> data() {
         return Arrays.asList(new Object[][]{
                 {false,false,KeyEvent.VK_SPACE,true,false},
@@ -69,7 +59,7 @@ public class SnakeFrameParam1Test {
 
     @Before
     public void setUp() throws Exception {
-        //sf = new SnakeFrame();
+         sf = new SnakeFrame();
     }
 
     @After
@@ -80,20 +70,19 @@ public class SnakeFrameParam1Test {
 
     @Test
     public void switchStatus(){
-        SnakeFrame sf = new SnakeFrame();
+
         sf.setBGameOver(bGameOver);
         SnakeFrame.MyPaintThread paintThread =sf.getPaintThread();
 
-        //new Thread(paintThread).start();
+
         paintThread.setPause(pause);
-        //System.out.println(paintThread);
-        //sf.getPaintThread().setPause(true);
+
 
         sf.getPaintThread().switchStatus(keyCode,sf);
-        //System.out.println(sf);
-        System.out.println("pause value verifily");
+
+        System.out.println("pause value verify");
         assertEquals(expPause,sf.getPaintThread().getPause());
-        System.out.println("bGameOver verifily");
+        System.out.println("bGameOver verify");
         assertEquals(expBGameOver,sf.getBGameOver());
 
     }
